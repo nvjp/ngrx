@@ -22,21 +22,12 @@ json-server (for mocking REST APIs during development)
 
 🚀 Getting Started
 📦 Install Dependencies
-bash
-Copy
-Edit
 npm install
 ▶️ Run Application
-bash
-Copy
-Edit
 ng serve
 App will be live at http://localhost:4200
 
 🧪 Run Mock API Server
-bash
-Copy
-Edit
 npx json-server --watch db.json --port 3000
 📁 Project Structure (NgRx Focused)
 pgsql
@@ -60,6 +51,8 @@ src/
 │   ├── app.module.ts
 │   └── app.component.ts
 🧠 NgRx Concepts Used
+
+
 Actions – Define events that describe state changes.
 
 Reducers – Handle state transitions based on actions.
@@ -74,14 +67,9 @@ Devtools – Time-travel debugging with Redux DevTools.
 
 📚 Example
 ✅ Action
-ts
-Copy
-Edit
+
 export const loadUsers = createAction('[User] Load Users');
 ✅ Reducer
-ts
-Copy
-Edit
 on(loadUsersSuccess, (state, { users }) => ({
   ...state,
   users,
@@ -116,9 +104,7 @@ Use Redux DevTools browser extension for real-time debugging.
 Enable with StoreDevtoolsModule.instrument() in AppModule.
 
 📦 Build
-bash
-Copy
-Edit
+
 ng build
 📃 License
 MIT
