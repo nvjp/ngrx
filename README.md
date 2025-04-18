@@ -1,59 +1,133 @@
-# Ngrx
+ NgRx Angular App
+This project is an Angular application using NgRx for state management, effects, and reactive data flow.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
+🧱 Tech Stack
+Angular v19.2.0
 
-## Development server
+NgRx v19.1.0
 
-To start a local development server, run:
+@ngrx/store
 
-```bash
+@ngrx/effects
+
+@ngrx/entity
+
+@ngrx/store-devtools
+
+@ngrx/router-store
+
+RxJS
+
+json-server (for mocking REST APIs during development)
+
+🚀 Getting Started
+📦 Install Dependencies
+bash
+Copy
+Edit
+npm install
+▶️ Run Application
+bash
+Copy
+Edit
 ng serve
-```
+App will be live at http://localhost:4200
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+🧪 Run Mock API Server
+bash
+Copy
+Edit
+npx json-server --watch db.json --port 3000
+📁 Project Structure (NgRx Focused)
+pgsql
+Copy
+Edit
+src/
+│
+├── app/
+│   ├── store/
+│   │   ├── actions/
+│   │   ├── reducers/
+│   │   ├── selectors/
+│   │   └── effects/
+│   ├── features/
+│   │   └── user/          # Feature-specific state
+│   │       ├── user.actions.ts
+│   │       ├── user.reducer.ts
+│   │       ├── user.effects.ts
+│   │       ├── user.selectors.ts
+│   │       └── user.model.ts
+│   ├── app.module.ts
+│   └── app.component.ts
+🧠 NgRx Concepts Used
+Actions – Define events that describe state changes.
 
-## Code scaffolding
+Reducers – Handle state transitions based on actions.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Selectors – Extract and compute data from state.
 
-```bash
-ng generate component component-name
-```
+Effects – Handle side effects like API calls.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Entity – For structured state management of collections.
 
-```bash
-ng generate --help
-```
+Devtools – Time-travel debugging with Redux DevTools.
 
-## Building
+📚 Example
+✅ Action
+ts
+Copy
+Edit
+export const loadUsers = createAction('[User] Load Users');
+✅ Reducer
+ts
+Copy
+Edit
+on(loadUsersSuccess, (state, { users }) => ({
+  ...state,
+  users,
+  loaded: true
+}))
+✅ Selector
+ts
+Copy
+Edit
+export const selectAllUsers = createSelector(
+  selectUserState,
+  (state: UserState) => state.users
+);
+✅ Effect
+ts
+Copy
+Edit
+loadUsers$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(loadUsers),
+    switchMap(() =>
+      this.userService.getUsers().pipe(
+        map(users => loadUsersSuccess({ users })),
+        catchError(error => of(loadUsersFailure({ error })))
+      )
+    )
+  )
+);
+🛠 Dev Tools
+Use Redux DevTools browser extension for real-time debugging.
 
-To build the project run:
+Enable with StoreDevtoolsModule.instrument() in AppModule.
 
-```bash
+📦 Build
+bash
+Copy
+Edit
 ng build
-```
+📃 License
+MIT
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Would you like this tailored to a specific use case, like "Todo App", "User Management", or something you're currently building?
 
-## Running unit tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
-```bash
-ng test
-```
 
-## Running end-to-end tests
 
-For end-to-end (e2e) testing, run:
 
-```bash
-ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
